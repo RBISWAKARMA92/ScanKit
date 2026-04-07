@@ -16,10 +16,8 @@ jobs:
           node-version: '20'
       - run: npm install
         working-directory: scankit-desktop/artifacts/desktop
-      - run: npm run build:win
+      - run: npx electron-builder --win --publish never
         working-directory: scankit-desktop/artifacts/desktop
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
           name: ScanKit-Windows
@@ -34,10 +32,8 @@ jobs:
           node-version: '20'
       - run: npm install
         working-directory: scankit-desktop/artifacts/desktop
-      - run: npm run build:mac
+      - run: npx electron-builder --mac --publish never
         working-directory: scankit-desktop/artifacts/desktop
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
           name: ScanKit-Mac
