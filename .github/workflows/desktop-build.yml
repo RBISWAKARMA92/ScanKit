@@ -16,11 +16,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
         working-directory: scankit-desktop/artifacts/desktop
-      - run: npx electron-builder --win --publish never
+      - name: Build Windows
+        run: npx electron-builder --win --publish never
         working-directory: scankit-desktop/artifacts/desktop
-      - uses: actions/upload-artifact@v4
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
         with:
           name: ScanKit-Windows
           path: scankit-desktop/artifacts/desktop/dist/**/*.exe
@@ -29,16 +32,20 @@ jobs:
     runs-on: macos-latest
     env:
       ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: "true"
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
         working-directory: scankit-desktop/artifacts/desktop
-      - run: npx electron-builder --mac --publish never
+      - name: Build Mac
+        run: npx electron-builder --mac --publish never
         working-directory: scankit-desktop/artifacts/desktop
-      - uses: actions/upload-artifact@v4
+      - name: Upload Mac artifact
+        uses: actions/upload-artifact@v4
         with:
           name: ScanKit-Mac
           path: scankit-desktop/artifacts/desktop/dist/**/*.dmg
