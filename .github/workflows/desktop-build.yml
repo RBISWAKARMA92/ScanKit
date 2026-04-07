@@ -1,0 +1,44 @@
+name: Build Desktop App
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+        working-directory: scankit-desktop/artifacts/desktop
+      - run: npm run build:win
+        working-directory: scankit-desktop/artifacts/desktop
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ScanKit-Windows
+          path: scankit-desktop/artifacts/desktop/dist/*.exe
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+        working-directory: scankit-desktop/artifacts/desktop
+      - run: npm run build:mac
+        working-directory: scankit-desktop/artifacts/desktop
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ScanKit-Mac
+          path: scankit-desktop/artifacts/desktop/dist/*.dmg
