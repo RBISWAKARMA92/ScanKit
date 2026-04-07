@@ -1,40 +1,44 @@
-name: Build Desktop App
-
-on:
-  push:
-    tags:
-      - 'v*'
-  workflow_dispatch:
-
-jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm install
-        working-directory: scankit-desktop/artifacts/desktop
-      - run: npx electron-builder --win --publish never
-        working-directory: scankit-desktop/artifacts/desktop
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ScanKit-Windows
-          path: scankit-desktop/artifacts/desktop/dist/*.exe
-
-  build-mac:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm install
-        working-directory: scankit-desktop/artifacts/desktop
-      - run: npx electron-builder --mac --publish never
-        working-directory: scankit-desktop/artifacts/desktop
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ScanKit-Mac
-          path: scankit-desktop/artifacts/desktop/dist/*.dmg
+{
+  "name": "scankit-desktop",
+  "version": "1.0.0",
+  "description": "ScanKit Document Scanner — Desktop App",
+  "main": "main.js",
+  "author": "ScanKit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RBISWAKARMA92/ScanKit.git"
+  },
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win --publish never",
+    "build:mac": "electron-builder --mac --publish never"
+  },
+  "build": {
+    "appId": "com.scankit.desktop",
+    "productName": "ScanKit",
+    "copyright": "Copyright © 2026 ScanKit",
+    "publish": null,
+    "directories": { "output": "dist" },
+    "files": ["main.js", "preload.js", "package.json"],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ScanKit"
+    },
+    "mac": {
+      "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }],
+      "category": "public.app-category.productivity"
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}
