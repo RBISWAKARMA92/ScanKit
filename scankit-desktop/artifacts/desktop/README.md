@@ -40,3 +40,4 @@ Output: `dist/ScanKit-1.0.0.dmg`
 - `icon.ico` — Windows icon
 - `icon.icns` — Mac icon
 - `dmg-background.png` — 660x400 PNG (optional, Mac DMG background)
+Built with Electron.
