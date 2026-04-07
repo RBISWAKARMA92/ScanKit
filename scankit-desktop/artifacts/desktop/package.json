@@ -4,6 +4,10 @@
   "description": "ScanKit Document Scanner — Desktop App",
   "main": "main.js",
   "author": "ScanKit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RBISWAKARMA92/ScanKit.git"
+  },
   "private": true,
   "scripts": {
     "start": "electron .",
@@ -15,23 +19,10 @@
     "appId": "com.scankit.desktop",
     "productName": "ScanKit",
     "copyright": "Copyright © 2026 ScanKit",
-    "directories": {
-      "output": "dist"
-    },
-    "files": [
-      "main.js",
-      "preload.js",
-      "build/**/*",
-      "package.json"
-    ],
+    "directories": { "output": "dist" },
+    "files": ["main.js", "preload.js", "package.json"],
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": ["x64"]
-        }
-      ],
-      "icon": "build/icon.ico"
+      "target": [{ "target": "nsis", "arch": ["x64"] }]
     },
     "nsis": {
       "oneClick": false,
@@ -41,22 +32,8 @@
       "shortcutName": "ScanKit"
     },
     "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": ["x64", "arm64"]
-        }
-      ],
-      "icon": "build/icon.icns",
+      "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }],
       "category": "public.app-category.productivity"
-    },
-    "dmg": {
-      "title": "ScanKit ${version}",
-      "background": "build/dmg-background.png",
-      "contents": [
-        { "x": 130, "y": 220 },
-        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
-      ]
     }
   },
   "dependencies": {},
